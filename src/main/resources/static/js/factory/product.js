@@ -1,4 +1,4 @@
-angular.module('myApp').factory('productFactory', function($http, $rootScope) {
+angular.module('myApp').factory('productService', function($http) {
 
     return {
         getAll: function () {

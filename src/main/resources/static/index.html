@@ -7,42 +7,10 @@
     <link rel="stylesheet" href="/node_modules/mdbootstrap/css/mdb.min.css">
     <link rel="stylesheet" href="css/custom.css">
 </head>
+
 <body>
-<nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar black">
-    <div class="container">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#">
-            <img src="/static/img/lux.png" class="d-inline-block align-top" style="height: 40px" alt="logo">
-        </a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#/new">New</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fa fa-facebook"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fa fa-twitter"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fa fa-instagram"></i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<!--/.Navigation-->
-<main class="mt-5">
-    <div class="container" ng-view></div>
-</main>
+
+<div ng-view ng-cloak></div>
 
 <!--Node Modules-->
 <script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -56,11 +24,14 @@
 <script src="https://use.fontawesome.com/0d188512fc.js"></script>
 
 <script src="js/app.js"></script>
-<script src="js/home.js"></script>
-<script src="js/new-product.js"></script>
-<script src="js/view-product.js"></script>
+<script src="js/controller/home.js"></script>
+<script src="js/controller/new-product.js"></script>
+<script src="js/controller/view-product.js"></script>
+<script src="js/controller/login.js"></script>
 <script src="js/factory/product.js"></script>
 <script src="js/factory/make.js"></script>
 <script src="js/factory/model.js"></script>
+<script src="js/factory/customer.js"></script>
+
 </body>
 </html>
