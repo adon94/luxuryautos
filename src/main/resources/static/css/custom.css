@@ -1,0 +1,38 @@
+.img-view {
+    display: block;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+}
+.logo-view {
+    display: block;
+    height: 250px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 5%;
+}
+
+.img-view-lg {
+    display: block;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+.right {
+    float: right;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.card-footer{
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+}

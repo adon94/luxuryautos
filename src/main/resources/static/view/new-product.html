@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-5">
+        <div class="card">
+            <div class="img-view" ng-style="{'background-image':'url('+ctrl.product.imageUrl+')'}"></div>
+            <div class="card-block">
+                <h4 class="card-title">{{ctrl.product.make.name}} {{ctrl.product.model.name}}</h4>
+                <p>{{ctrl.product.color}}</p>
+                <p>{{ctrl.product.price | currency:"€"}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-7">
+        <form ng-submit="ctrl.createProduct()">
+            <div class="form-group">
+                <label for="imageUrl">Image Url</label>
+                <input class="input-md" id="imageUrl" type="url" ng-model="ctrl.product.imageUrl" />
+            </div>
+            <div class="form-group">
+                <label for="make">Make</label>
+                <select class="form-control" id="make" ng-model="ctrl.product.make" ng-options="make as make.name for make in ctrl.makes | orderBy:'name' track by make.id">
+                </select>
+            </div>
+            <button class="btn btn-success" data-toggle="modal" data-target="#makeModal">+ Add new make</button>
+            <div class="form-group">
+                <label for="model">Model</label>
+                <select class="form-control" id="model" ng-model="ctrl.product.model" ng-options="model as model.name for model in ctrl.product.make.models | orderBy:'name' track by model.id">
+                </select>
+            </div>
+            <button class="btn btn-success" data-toggle="modal" data-target="#modelModal">+ Add new model</button>
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input class="input-md" id="color" type="text" ng-model="ctrl.product.color" />
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input class="input-md" id="price" type="number" ng-model="ctrl.product.price" />
+            </div>
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="makeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">+ Add new make</h4>
+            </div>
+            <!--Body-->
+            <form ng-submit="ctrl.addMake()">
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label for="makeName">Name</label>
+                            <input class="input-md" id="makeName" type="text" ng-model="ctrl.newMake.name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="logoUrl">Logo</label>
+                            <input class="input-md" id="logoUrl" type="url" ng-model="ctrl.newMake.logoUrl" />
+                        </div>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">+ Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<div class="modal fade" id="modelModal" tabindex="-1" role="dialog" aria-labelledby="modelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="modelModalLabel">+ Add new model</h4>
+            </div>
+            <!--Body-->
+            <form ng-submit="ctrl.addModel()">
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label>Make</label>
+                            <select class="form-control" ng-model="ctrl.makeForModel" ng-options="make as make.name for make in ctrl.makes | orderBy:'name' track by make.name">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="modelName">Model Name</label>
+                            <input class="input-md" id="modelName" type="text" ng-model="ctrl.newModel.name" />
+                        </div>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">+ Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+

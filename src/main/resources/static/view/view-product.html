@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="img-view-lg" ng-style="{'background-image':'url('+ctrl.product.imageUrl+')'}"></div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="logo-view" ng-style="{'background-image':'url('+ctrl.product.make.logoUrl+')'}"></div>
+            <div class="card-block">
+                <h4 class="card-title">{{ctrl.product.make.name}} {{ctrl.product.model.name}}</h4>
+                <hr class="my-2">
+                <p>{{ctrl.product.color}}</p>
+                <p>{{ctrl.product.price | currency:"€"}}</p>
+            </div>
+        </div>
+    </div>
+</div>
