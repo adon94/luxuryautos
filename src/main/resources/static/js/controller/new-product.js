@@ -6,6 +6,11 @@ angular.module('myApp').controller('newProduct', function($scope, $rootScope, $c
     self.newModel = {};
     self.makeForModel = {};
 
+    let userString = $cookies.get('currentUser');
+    if(userString != null) {
+        $rootScope.currentUser = JSON.parse(userString);
+    }
+
     self.refresh = function () {
         makeService.getAll().then(function (response) {
             self.makes = response.data;

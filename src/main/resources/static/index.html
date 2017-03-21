@@ -5,6 +5,7 @@
     <title>Luxury Autos</title>
     <link rel="stylesheet" href="/node_modules/mdbootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/mdbootstrap/css/mdb.min.css">
+    <link rel="stylesheet" href="/node_modules/angular-toastr/dist/angular-toastr.min.css">
     <link rel="stylesheet" href="css/custom.css">
 </head>
 
@@ -20,6 +21,7 @@
 <script src="/node_modules/mdbootstrap/js/tether.js"></script>
 <script src="/node_modules/mdbootstrap/js/bootstrap.min.js"></script>
 <script src="/node_modules/mdbootstrap/js/mdb.min.js"></script>
+<script src="/node_modules/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
 
 <script src="https://use.fontawesome.com/0d188512fc.js"></script>
 
@@ -28,10 +30,21 @@
 <script src="js/controller/new-product.js"></script>
 <script src="js/controller/view-product.js"></script>
 <script src="js/controller/login.js"></script>
+<script src="js/controller/basket.js"></script>
 <script src="js/factory/product.js"></script>
 <script src="js/factory/make.js"></script>
 <script src="js/factory/model.js"></script>
 <script src="js/factory/customer.js"></script>
+
+<script type="text/javascript">
+    angular.module('myApp').run(function($rootScope, $cookies, $location) {
+        $rootScope.logout = function () {
+            $cookies.remove('currentUser');
+            $rootScope.currentUser = null;
+            $location.path("/login");
+        };
+    });
+</script>
 
 </body>
 </html>

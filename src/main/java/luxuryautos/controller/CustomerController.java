@@ -3,6 +3,7 @@ package luxuryautos.controller;
 import luxuryautos.model.Customer;
 import luxuryautos.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +42,12 @@ public class CustomerController {
     Customer getCustomer(@PathVariable("id") Long id) throws Exception {
 
         return customerService.view(id);
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public @ResponseBody
+    ResponseEntity<Customer> login(@RequestBody Customer customer) throws Exception {
+
+        return customerService.login(customer);
     }
 }

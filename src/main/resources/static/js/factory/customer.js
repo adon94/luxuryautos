@@ -9,6 +9,9 @@ angular.module('myApp').factory('customerService', function($http) {
         },
         getById: function (id) {
             return $http.get('/customer/view/'+id);
+        },
+        login: function (customer) {
+            return $http.post('/customer/login', customer);
         }
     }
 

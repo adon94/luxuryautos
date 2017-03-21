@@ -6,7 +6,7 @@
                 <div class="card card-block" style="position: fixed">
                     <ul>
                         <li>
-                            <label for="make">Make</label>
+                            <label for="make">Manufacturer</label>
                             <select class="form-control" id="make" ng-model="makeSelect" ng-options="make as make.name for make in ctrl.makes | orderBy:'name' track by make.id">
                                 <option value="">None</option>
                             </select>
@@ -20,6 +20,7 @@
                                 <option value="Green">Green</option>
                                 <option value="Orange">Orange</option>
                                 <option value="Red">Red</option>
+                                <option value="Yellow">Yellow</option>
                             </select>
                         </li>
                         <li>
@@ -44,7 +45,7 @@
                                 <p>{{product.color}}</p>
                                 <div class="card-footer">
                                     <span class="left">{{product.price | currency:"€"}}</span>
-                                    <span class="right"><a>+ <i class="fa fa-shopping-basket"></i></a></span>
+                                    <span class="right"><a ng-click="ctrl.addToBasket(product)">+ <i class="fa fa-shopping-basket"></i></a></span>
                                 </div>
                             </div>
                         </div>

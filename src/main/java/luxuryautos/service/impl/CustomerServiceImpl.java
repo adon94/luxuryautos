@@ -4,6 +4,8 @@ import luxuryautos.dao.CustomerDAO;
 import luxuryautos.model.Customer;
 import luxuryautos.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,5 +39,21 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean remove(Long id) throws Exception {
         customerDAO.delete(id);
         return customerDAO.exists(id);
+    }
+
+    @Override
+    public ResponseEntity<Customer> login(Customer customer) throws Exception {
+        List<Customer> cs = customerDAO.findByEmail(customer.getEmail());
+        Customer c;
+        if(!cs.isEmpty()) {
+            c = cs.get(0);
+            if(c.getPassword().equals(customer.getPassword())){
+                return new ResponseEntity<Customer>(c, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Customer>(customer, HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<Customer>(customer, HttpStatus.NOT_FOUND);
+        }
     }
 }

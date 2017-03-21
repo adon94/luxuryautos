@@ -1,4 +1,4 @@
-angular.module('myApp', [ 'ngRoute', 'ngCookies' ]).config(function($routeProvider, $locationProvider) {
+angular.module('myApp', [ 'ngRoute', 'ngCookies', 'toastr' ]).config(function($routeProvider, $locationProvider, toastrConfig) {
 
     $locationProvider.hashPrefix('');
 
@@ -23,5 +23,22 @@ angular.module('myApp', [ 'ngRoute', 'ngCookies' ]).config(function($routeProvid
             controller: 'login',
             controllerAs: 'ctrl'
         })
+        .when('/basket', {
+            templateUrl: 'view/basket.html',
+            controller: 'basket',
+            controllerAs: 'ctrl'
+        })
         .otherwise('/');
+
+    angular.extend(toastrConfig, {
+        autoDismiss: false,
+        containerId: 'toast-container',
+        maxOpened: 0,
+        newestOnTop: false,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: false,
+        preventOpenDuplicates: false,
+        target: 'body'
+    });
+
 });

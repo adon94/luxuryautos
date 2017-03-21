@@ -1,6 +1,7 @@
 package luxuryautos.service;
 
 import luxuryautos.model.Customer;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface CustomerService {
     List<Customer> all() throws Exception;
     Customer save(Customer customer) throws Exception;
     boolean remove(Long id) throws Exception;
+    ResponseEntity<Customer> login(Customer customer) throws Exception;
 }

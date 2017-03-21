@@ -1,0 +1,61 @@
+<div ng-include="'partial/nav.html'"></div>
+
+<main class="mt-5">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table product-table">
+                <!--Table head-->
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Color</th>
+                    <th>Price</th>
+                    <th>QTY</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!--/Table head-->
+
+                <!--Table body-->
+                <tbody>
+
+                <!--First row-->
+                <tr ng-repeat="product in currentUser.basket">
+                    <th scope="row">
+                        <img ng-src="{{product.imageUrl}}" alt="" class="img-fluid">
+                    </th>
+                    <td>
+                        <h5><strong>{{product.model.name}}</strong></h5>
+                        <p class="text-muted">{{product.make.name}}</p>
+                    </td>
+                    <td>{{product.color}}</td>
+                    <td>{{product.price | currency:"€"}}</td>
+                    <td>
+                        <span class="qty">{{product.quantity}}</span>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-sm btn-elegant btn-rounded" ng-click="product.quantity - 1">
+                                <input type="radio" name="options" id="option1">&mdash;
+                            </label>
+                            <label class="btn btn-sm btn-elegant btn-rounded" ng-click="product.quantity + 1">
+                                <input type="radio" name="options" id="option2">+
+                            </label>
+                        </div>
+                    </td>
+                    <td>{{product.price * product.quantity | currency:"€"}}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-elegant" data-toggle="tooltip" data-placement="top" title="Remove item">X
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td>
+                        <h4><strong>Total</strong></h4></td>
+                    <td>
+                        <h4><strong>{{ctrl.totalPrice | currency:"€"}}</strong></h4></td>
+                    <td colspan="3"><button type="button" class="btn btn-elegant">Complete purchase  <i class="fa fa-angle-right right"></i></button></td>
+                </tr>
+    </div>
+</main>
