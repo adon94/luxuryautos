@@ -1,3 +1,45 @@
+html,
+body,
+.view {
+    height: 100%;
+}
+
+/* Carousel*/
+
+.carousel,
+.carousel-item,
+.active {
+    height: 100%;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+.carousel-item:nth-child(1) {
+    background-image: url("http://cdn.pcwallart.com/images/ferrari-458-white-wallpaper-wallpaper-2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.carousel-item:nth-child(2) {
+    background-image: url("https://img3.goodfon.su/original/1600x900/1/d8/lamborghini-aventador-lp-5170.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.carousel-item:nth-child(3) {
+    background-image: url("http://wallpapersqq.net/wp-content/uploads/2016/03/black-2017-Bugatti-Chiron.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.carousel-item:nth-child(4) {
+    background-image: url("http://images.caricos.com/a/audi/2017_audi_r8_v10_us/images/2560x1440/2017_audi_r8_v10_us_3_2560x1440.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .img-view {
     display: block;
     height: 250px;
@@ -35,4 +77,18 @@
     background-color: transparent;
     padding-left: 0;
     padding-right: 0;
+}
+
+.on-top {
+    margin-top: 100px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1050;
+    width: 95%;
+}
+
+.login-card {
+    background-color: rgba(255, 255, 255, 0.85);
 }
