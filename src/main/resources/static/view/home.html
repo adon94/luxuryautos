@@ -39,12 +39,12 @@
                     <div class="col-6" ng-repeat="product in ctrl.products | orderBy:'-price' | filter : ({ makeName : makeSelect.name, color : colorSelect })"
                          ng-if="product.price <= ctrl.maxPrice && product.price >= ctrl.minPrice">
                         <div class="card">
-                            <div class="img-view" ng-style="{'background-image':'url('+product.imageUrl+')'}"></div>
+                            <a href="#/product/{{product.id}}"><div class="img-view" ng-style="{'background-image':'url('+product.imageUrl+')'}"></div></a>
                             <div class="card-block">
                                 <a href="#/product/{{product.id}}"><h4 class="card-title">{{product.make.name}} {{product.model.name}}</h4></a>
                                 <p>{{product.color}}</p>
                                 <div class="card-footer">
-                                    <span class="left">{{product.price | currency:"€"}}</span>
+                                    <span class="left text-muted">{{product.price | currency:"€"}}</span>
                                     <span class="right"><a ng-click="ctrl.addToBasket(product)">+ <i class="fa fa-shopping-basket"></i></a></span>
                                 </div>
                             </div>

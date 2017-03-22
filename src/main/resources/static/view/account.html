@@ -1,0 +1,91 @@
+<div ng-include="'partial/nav.html'"></div>
+
+<main class="mt-5">
+    <div class="container">
+        <table class="table table-hover">
+            <tbody>
+            <tr>
+                <td><b>Name</b></td>
+                <td ng-if="!ctrl.editName">{{ctrl.user.name}}</td>
+                <td ng-if="ctrl.editName"><input ng-model="ctrl.user.name" ng-value="currentUser.name"></td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editName" ng-click="ctrl.editName = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editName" ng-click="ctrl.updateUser(); ctrl.editName = false">Save</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Email</b></td>
+                <td ng-if="!ctrl.editEmail">{{ctrl.user.email}}</td>
+                <td ng-if="ctrl.editEmail"><input ng-model="ctrl.user.email" ng-value="currentUser.email"></td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editEmail" ng-click="ctrl.editEmail = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editEmail" ng-click="ctrl.updateUser(); ctrl.editEmail = false">Save</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Password</b></td>
+                <td ng-if="!ctrl.editPassword">{{ctrl.user.password}}</td>
+                <td ng-if="ctrl.editPassword"><input ng-model="ctrl.user.password" ng-value="currentUser.password"></td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editPassword" ng-click="ctrl.editPassword = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editPassword" ng-click="ctrl.updateUser(); ctrl.editPassword = false">Save</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Address</b></td>
+                <td ng-if="!ctrl.editAddress">{{ctrl.user.address}}</td>
+                <td ng-if="ctrl.editAddress"><input ng-model="ctrl.user.address" ng-value="currentUser.address"></td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editAddress" ng-click="ctrl.editAddress = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editAddress" ng-click="ctrl.updateUser(); ctrl.editAddress = false">Save</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Card type</b></td>
+                <td ng-if="!ctrl.editCardType">{{ctrl.user.cardType}}</td>
+                <td ng-if="ctrl.editCardType">
+                    <select ng-model="ctrl.user.cardType" ng-value="currentUser.cardType">
+                        <option value="Visa/Delta/Electron">Visa/Delta/Electron</option>
+                        <option value="Mastercard/EuroCard">Mastercard/EuroCard</option>
+                        <option value="American Express">American Express</option>
+                        <option value="Solo/Maestro">Solo/Maestro</option>
+                        <option value="Maestro">Maestro</option>
+                    </select>
+                </td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editCardType" ng-click="ctrl.editCardType = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editCardType" ng-click="ctrl.updateUser(); ctrl.editCardType = false">Save</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Card number</b></td>
+                <td ng-if="!ctrl.editCardNumber">{{ctrl.user.cardNumber}}</td>
+                <td ng-if="ctrl.editCardNumber"><input ng-model="ctrl.user.cardNumber" ng-value="currentUser.cardNumber" placeholder="4242 4242 4242 4242"></td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editCardNumber" ng-click="ctrl.editCardNumber = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editCardNumber" ng-click="ctrl.updateUser(); ctrl.editCardNumber = false">Save</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Expiry date</b></td>
+                <td ng-if="!ctrl.editCardExpiry">{{ctrl.user.cardExpiry}}</td>
+                <td ng-if="ctrl.editCardExpiry"><input ng-model="ctrl.user.cardExpiry" ng-value="currentUser.cardExpiry" placeholder="MM/YY"></td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editCardExpiry" ng-click="ctrl.editCardExpiry = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editCardExpiry" ng-click="ctrl.updateUser(); ctrl.editCardExpiry = false">Save</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>CVC</b></td>
+                <td ng-if="!ctrl.editCardCvc">{{ctrl.user.cardCvc}}</td>
+                <td ng-if="ctrl.editCardCvc"><input ng-model="ctrl.user.cardCvc" ng-value="currentUser.cardCvc" placeholder="000">
+                </td>
+                <td>
+                    <a class="blue-text" ng-if="!ctrl.editCardCvc" ng-click="ctrl.editCardCvc = true">Edit</a>
+                    <a class="blue-text" ng-if="ctrl.editCardCvc" ng-click="ctrl.updateUser(); ctrl.editCardCvc = false">Save</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

@@ -28,6 +28,11 @@ angular.module('myApp', [ 'ngRoute', 'ngCookies', 'toastr' ]).config(function($r
             controller: 'basket',
             controllerAs: 'ctrl'
         })
+        .when('/account', {
+            templateUrl: 'view/account.html',
+            controller: 'account',
+            controllerAs: 'ctrl'
+        })
         .otherwise('/');
 
     angular.extend(toastrConfig, {

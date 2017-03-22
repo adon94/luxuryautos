@@ -1,6 +1,7 @@
 package luxuryautos.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,6 +20,8 @@ public class Product extends AbstractEntity {
     private String imageUrl;
     private int stock;
     private String category;
+
+    @Lob
     private String description;
 
     public Make getMake() {

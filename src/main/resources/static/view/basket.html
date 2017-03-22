@@ -2,7 +2,10 @@
 
 <main class="mt-5">
     <div class="container">
-        <div class="table-responsive">
+        <h1>Shopping basket</h1>
+        <hr class="my-2" ng-if="currentUser.basket.length == 0">
+        <h2 ng-if="currentUser.basket.length == 0">Your basket is empty</h2>
+        <div class="table-responsive" ng-if="currentUser.basket.length > 0">
             <table class="table product-table">
                 <!--Table head-->
                 <thead>
@@ -45,17 +48,48 @@
                     </td>
                     <td>{{product.price * product.quantity | currency:"€"}}</td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-elegant" data-toggle="tooltip" data-placement="top" title="Remove item">X
+                        <button type="button" class="btn btn-sm btn-elegant" data-toggle="tooltip" data-placement="top" title="Remove item" ng-click="ctrl.removeProduct(product)">X
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
                     <td>
-                        <h4><strong>Total</strong></h4></td>
+                        <h4><strong>Total:</strong></h4></td>
                     <td>
                         <h4><strong>{{ctrl.totalPrice | currency:"€"}}</strong></h4></td>
-                    <td colspan="3"><button type="button" class="btn btn-elegant">Complete purchase  <i class="fa fa-angle-right right"></i></button></td>
+                    <td colspan="3"><button type="button" class="btn btn-elegant" data-toggle="modal" data-target="#purchaseModal">Complete purchase  <i class="fa fa-angle-right right"></i></button></td>
                 </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="purchaseModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="purchaseModalLabel">Are you sure?</h4>
+                    </div>
+                    <!--Body-->
+                    <form ng-submit="ctrl.confirmPurchase()">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="cvcInput">Enter CVC to confirm purchase</label>
+                                <input class="input-md" id="cvcInput" type="text" ng-model="ctrl.cvc">
+                            </div>
+                        </div>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-elegant">Confirm purchase</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+
     </div>
 </main>

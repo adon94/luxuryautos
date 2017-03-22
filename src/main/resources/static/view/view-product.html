@@ -6,6 +6,15 @@
             <div class="col-8">
                 <div class="card">
                     <div class="img-view-lg" ng-style="{'background-image':'url('+ctrl.product.imageUrl+')'}"></div>
+                    <div ng-if="ctrl.editable" class="card-block">
+                        <input class="form-control" ng-model="ctrl.product.imageUrl">
+                    </div>
+                </div>
+                <div class="card card-block">
+                    <h4 class="card-title">Description</h4>
+                    <hr class="my-2">
+                    <p ng-if="!ctrl.editable">{{ctrl.product.description}}</p>
+                    <textarea ng-if="ctrl.editable" type="text" id="form7" class="form-control" style="height: 200px" ng-model="ctrl.product.description"></textarea>
                 </div>
             </div>
             <div class="col-4">
@@ -14,10 +23,19 @@
                     <div class="card-block">
                         <h4 class="card-title">{{ctrl.product.make.name}} {{ctrl.product.model.name}}</h4>
                         <hr class="my-2">
-                        <p>{{ctrl.product.color}}</p>
-                        <p>{{ctrl.product.price | currency:"€"}}</p>
+                        <p ng-if="!ctrl.editable">{{ctrl.product.color}}</p>
+                        <input class="form-control" ng-if="ctrl.editable" ng-model="ctrl.product.color">
+                        <p ng-if="!ctrl.editable" class="text-muted">{{ctrl.product.price | currency:"€"}}</p>
+                        <input class="form-control" ng-if="ctrl.editable" ng-model="ctrl.product.price">
+                        <p ng-if="!ctrl.editable">{{ctrl.product.stock}} left in stock</p>
+                        <input class="form-control" ng-if="ctrl.editable" ng-model="ctrl.product.stock">
+                        <button class="btn btn-elegant" ng-click="ctrl.addToBasket()" ng-if="ctrl.product.stock > 0"><i class="fa fa-cart-plus"></i> Add to cart</button>
+                        <button class="btn btn-default" ng-click="ctrl.editable = true" ng-if="currentUser.admin && !ctrl.editable">Edit</button>
+                        <button class="btn btn-default" ng-click="ctrl.updateProduct()" ng-if="currentUser.admin && ctrl.editable">Save</button>
                     </div>
                 </div>
+            </div>
+            <div class="col-8">
             </div>
         </div>
     </div>
