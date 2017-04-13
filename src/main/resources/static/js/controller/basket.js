@@ -18,8 +18,9 @@ angular.module('myApp').controller('basket', function($rootScope, $cookies, $loc
     }
 
     let getBasketItems = function () {
-        basketItemService.getByCustomer(user).then(function successCallback(response) {
+        basketItemService.getBasketItems(user).then(function successCallback(response) {
             self.allBasketItems = response.data;
+            console.log(self.allBasketItems);
             self.basketItems = [];
             getTotal();
         });

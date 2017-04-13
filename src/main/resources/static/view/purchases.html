@@ -1,0 +1,61 @@
+<div ng-include="'partial/nav.html'"></div>
+
+<main class="mt-5">
+    <div class="container">
+        <h1>Purchases</h1>
+        <div ng-if="ctrl.basketItems.length == 0">
+            <hr class="my-2">
+            <h2>You have no previous purchases</h2>
+            <p>Click <a href="#/">here</a> to continue shopping</p>
+        </div>
+        <div class="table-responsive" ng-if="ctrl.basketItems.length > 0">
+            <table class="table product-table">
+                <!--Table head-->
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Color</th>
+                    <th>Price</th>
+                    <th>QTY</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!--/Table head-->
+
+                <!--Table body-->
+                <tbody>
+
+                <!--First row-->
+                <tr ng-repeat="basketItem in ctrl.basketItems">
+                    <th scope="row">
+                        <a href="#/product/{{basketItem.product.id}}"><img ng-src="{{basketItem.product.imageUrl}}" alt="" class="img-fluid"></a>
+                    </th>
+                    <td>
+                        <a href="#/product/{{basketItem.product.id}}">
+                            <h5><strong>{{basketItem.product.model.name}}</strong></h5>
+                            <p class="text-muted">{{basketItem.product.make.name}}</p>
+                        </a>
+                    </td>
+                    <td>{{basketItem.product.color}}</td>
+                    <td>{{basketItem.product.price | currency:"€"}}</td>
+                    <td>
+                        <span class="qty">{{basketItem.quantityPurchased}}</span>
+                    </td>
+                    <td>{{basketItem.product.price * basketItem.quantityPurchased | currency:"€"}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td>
+                        <h4><strong>Total spent:</strong></h4>
+                    </td>
+                    <td>
+                        <h4><strong>{{ctrl.totalPrice | currency:"€"}}</strong></h4>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>

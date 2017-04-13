@@ -28,6 +28,11 @@ angular.module('myApp', [ 'ngRoute', 'ngCookies', 'toastr', 'star-rating' ]).con
             controller: 'basket',
             controllerAs: 'ctrl'
         })
+        .when('/purchases', {
+            templateUrl: 'view/purchases.html',
+            controller: 'purchases',
+            controllerAs: 'ctrl'
+        })
         .when('/account', {
             templateUrl: 'view/account.html',
             controller: 'account',

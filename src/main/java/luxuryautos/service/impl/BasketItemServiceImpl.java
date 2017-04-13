@@ -7,20 +7,23 @@ import luxuryautos.model.Customer;
 import luxuryautos.model.Product;
 import luxuryautos.service.BasketItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+@Primary
 @Service
 public class BasketItemServiceImpl implements BasketItemService {
 
-    private final BasketItemDAO basketItemDAO;
+    private BasketItemDAO basketItemDAO;
 
     @Autowired
-    public BasketItemServiceImpl(BasketItemDAO basketItemDAO) {
+    public void setBasketItemDAO(BasketItemDAO basketItemDAO) {
         this.basketItemDAO = basketItemDAO;
     }
 
@@ -38,7 +41,16 @@ public class BasketItemServiceImpl implements BasketItemService {
 
     @Override
     public List<BasketItem> findByCustomer(Customer customer) throws Exception {
-        return basketItemDAO.findByCustomer(customer);
+        List<BasketItem> basketItems = basketItemDAO.findByCustomer(customer);
+
+        List<BasketItem> basketItems1 = new ArrayList<>();
+        for (BasketItem b : basketItems) {
+            if (b.getQuantity() != 0){
+                basketItems1.add(b);
+            }
+        }
+
+        return basketItems1;
     }
 
     @Override

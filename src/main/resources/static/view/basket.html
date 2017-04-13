@@ -28,7 +28,7 @@
                 <tbody>
 
                 <!--First row-->
-                <tr ng-repeat="basketItem in ctrl.basketItems" ng-if="basketItem.quantity > 0">
+                <tr ng-repeat="basketItem in ctrl.basketItems">
                     <th scope="row">
                         <a href="#/product/{{basketItem.product.id}}"><img ng-src="{{basketItem.product.imageUrl}}" alt="" class="img-fluid"></a>
                     </th>
@@ -62,7 +62,8 @@
                     <td>
                         <h4><strong>Total:</strong></h4></td>
                     <td>
-                        <h4><strong>{{ctrl.totalPrice | currency:"€"}}</strong></h4></td>
+                        <h4><strong>{{ctrl.totalPrice | currency:"€"}}</strong></h4>
+                    </td>
                     <td colspan="3"><button type="button" class="btn btn-elegant" data-toggle="modal" data-target="#purchaseModal">Complete purchase  <i class="fa fa-angle-right right"></i></button></td>
                 </tr>
                 </tbody>
