@@ -3,9 +3,12 @@
 <main class="mt-5">
     <div class="container">
         <h1>Shopping basket</h1>
-        <hr class="my-2" ng-if="currentUser.basket.length == 0">
-        <h2 ng-if="currentUser.basket.length == 0">Your basket is empty</h2>
-        <div class="table-responsive" ng-if="currentUser.basket.length > 0">
+        <div ng-if="ctrl.basketItems.length == 0">
+            <hr class="my-2">
+            <h2>Your basket is empty</h2>
+            <p>Click <a href="#/">here</a> to continue shopping</p>
+        </div>
+        <div class="table-responsive" ng-if="ctrl.basketItems.length > 0">
             <table class="table product-table">
                 <!--Table head-->
                 <thead>
@@ -25,30 +28,32 @@
                 <tbody>
 
                 <!--First row-->
-                <tr ng-repeat="product in currentUser.basket">
+                <tr ng-repeat="basketItem in ctrl.basketItems" ng-if="basketItem.quantity > 0">
                     <th scope="row">
-                        <img ng-src="{{product.imageUrl}}" alt="" class="img-fluid">
+                        <a href="#/product/{{basketItem.product.id}}"><img ng-src="{{basketItem.product.imageUrl}}" alt="" class="img-fluid"></a>
                     </th>
                     <td>
-                        <h5><strong>{{product.model.name}}</strong></h5>
-                        <p class="text-muted">{{product.make.name}}</p>
+                        <a href="#/product/{{basketItem.product.id}}">
+                            <h5><strong>{{basketItem.product.model.name}}</strong></h5>
+                            <p class="text-muted">{{basketItem.product.make.name}}</p>
+                        </a>
                     </td>
-                    <td>{{product.color}}</td>
-                    <td>{{product.price | currency:"€"}}</td>
+                    <td>{{basketItem.product.color}}</td>
+                    <td>{{basketItem.product.price | currency:"€"}}</td>
                     <td>
-                        <span class="qty">{{product.quantity}}</span>
+                        <span class="qty">{{basketItem.quantity}}</span>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-sm btn-elegant btn-rounded" ng-click="product.quantity - 1">
+                            <label class="btn btn-sm btn-elegant btn-rounded" ng-click="ctrl.takeFromBasket(basketItem)">
                                 <input type="radio" name="options" id="option1">&mdash;
                             </label>
-                            <label class="btn btn-sm btn-elegant btn-rounded" ng-click="product.quantity + 1">
+                            <label class="btn btn-sm btn-elegant btn-rounded" ng-click="ctrl.addToBasket(basketItem)">
                                 <input type="radio" name="options" id="option2">+
                             </label>
                         </div>
                     </td>
-                    <td>{{product.price * product.quantity | currency:"€"}}</td>
+                    <td>{{basketItem.product.price * basketItem.quantity | currency:"€"}}</td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-elegant" data-toggle="tooltip" data-placement="top" title="Remove item" ng-click="ctrl.removeProduct(product)">X
+                        <button type="button" class="btn btn-sm btn-elegant" data-toggle="tooltip" data-placement="top" title="Remove item" ng-click="ctrl.removeProduct(basketItem)">X
                         </button>
                     </td>
                 </tr>

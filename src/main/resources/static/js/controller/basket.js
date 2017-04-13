@@ -1,35 +1,52 @@
-angular.module('myApp').controller('basket', function($rootScope, $cookies, $location, toastr, customerService) {
+angular.module('myApp').controller('basket', function($rootScope, $cookies, $location, toastr, customerService, basketItemService) {
+
+    //TO DO:
+    //       Purchase history page
+    //       Reviews
 
     let self = this;
     let user = {};
 
-    let userString = $cookies.get('currentUser');
-    if(userString != null) {
-        $rootScope.currentUser = JSON.parse(userString);
-        user = $rootScope.currentUser;
+    let userId = $cookies.get('currentUser');
+    if(userId != null) {
+        customerService.getById(userId).then(function successCallback(response) {
+            $rootScope.currentUser = response.data;
+            user = $rootScope.currentUser;
+
+            getBasketItems();
+        });
     }
+
+    let getBasketItems = function () {
+        basketItemService.getByCustomer(user).then(function successCallback(response) {
+            self.allBasketItems = response.data;
+            self.basketItems = [];
+            getTotal();
+        });
+    };
 
     let getTotal = function () {
         self.totalPrice = 0;
 
-        angular.forEach(user.basket, function (value, key) {
-            self.totalPrice += value.price;
-            $rootScope.currentUser.basket[key].quantity = 1;
+        angular.forEach(self.allBasketItems, function (value) {
+            if(value.quantity > 0){
+                self.basketItems.push(value);
+                self.totalPrice += value.product.price * value.quantity;
+            }
         });
     };
 
-    getTotal();
+    self.removeProduct = function (basket) {
 
-    self.removeProduct = function (product) {
-        let index = user.basket.indexOf(product);
-        user.basket.splice(index, 1);
-        customerService.create(user).then(function successCallback(response) {
-            $cookies.put('currentUser', JSON.stringify(response.data));
-            $rootScope.currentUser = response.data;
-            user = $rootScope.currentUser;
+        let basketItem = {};
+        basketItem.customer = user;
+        basketItem.product = basket.product;
+        basketItem.quantity = -Math.abs(basket.quantity);
+        console.log(basketItem.quantity);
 
-            getTotal();
-            toastr.info(product.make.name + ' '+ product.model.name,  'Removed from your basket:');
+        basketItemService.save(basketItem).then(function successCallback(response) {
+            getBasketItems();
+            toastr.info(basket.product.make.name + ' '+ basket.product.model.name,  'Removed from your basket:');
         }, function errorCallback() {
             toastr.error('An unknown error occurred', 'Error');
         })
@@ -39,16 +56,8 @@ angular.module('myApp').controller('basket', function($rootScope, $cookies, $loc
 
         if(user.cardCvc != null && user.cardType != null && user.cardExpiry != null && user.cardNumber != null && user.address != null && user.name != null) {
             if (self.cvc == user.cardCvc) {
-                angular.forEach(user.basket, function (value) {
-                    user.purchased.push(value);
-                });
 
-                user.basket = [];
-
-                customerService.create(user).then(function successCallback(response) {
-                    $cookies.put('currentUser', JSON.stringify(response.data));
-                    $rootScope.currentUser = response.data;
-                    user = $rootScope.currentUser;
+                basketItemService.purchase(self.basketItems).then(function successCallback(response) {
 
                     angular.element(document.querySelector('#purchaseModal')).modal('hide');
                     angular.element(document.querySelector('.modal-backdrop')).remove();
@@ -56,7 +65,13 @@ angular.module('myApp').controller('basket', function($rootScope, $cookies, $loc
                     toastr.success('Order confirmed', 'Thank you for your purchase');
                     $location.path("/");
                 }, function errorCallback(response) {
-                    toastr.error('An unknown error occured', 'Error');
+                    if (response.status == 409){
+                        angular.forEach(response.data, function (value) {
+                            toastr.warning('Order quantity too high for ' + value.product.make.name + ' ' + value.product.model.name, 'Please review your order');
+                        });
+                    } else {
+                        toastr.error('An unknown error occured', 'Error');
+                    }
                 });
             } else {
                 toastr.error('Incorrect CVC', 'Error');
@@ -65,6 +80,43 @@ angular.module('myApp').controller('basket', function($rootScope, $cookies, $loc
             toastr.info('<a href="#/account">Click here</a>', 'You must complete your account details to proceed', {
                 allowHtml: true
             });
+        }
+    };
+
+    self.addToBasket = function (basket) {
+        if (user != null) {
+            let basketItem = {};
+            basketItem.customer = user;
+            basketItem.product = basket.product;
+            basketItem.quantity = 1;
+
+            basketItemService.save(basketItem).then(function successCallback(response) {
+                getBasketItems();
+                toastr.success(basket.product.make.name + ' ' + basket.product.model.name + ' added');
+            }, function errorCallback() {
+                toastr.error('An unknown error occurred', 'Error');
+            })
+        }
+    };
+
+    self.takeFromBasket = function (basket) {
+        if (user != null) {
+
+            if (basket.quantity > 1) {
+
+                let basketItem = {};
+                basketItem.customer = user;
+                basketItem.product = basket.product;
+                basketItem.quantity = -1;
+
+                basketItemService.save(basketItem).then(function successCallback(response) {
+                    getBasketItems();
+                    toastr.success(basket.product.make.name + ' ' + basket.product.model.name + ' removed');
+                }, function errorCallback() {
+                    toastr.error('An unknown error occurred', 'Error');
+                })
+
+            }
         }
     };
 

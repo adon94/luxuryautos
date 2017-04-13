@@ -27,6 +27,14 @@ public class ProductController {
         return this.productService.create(product);
     }
 
+    @RequestMapping(value = "/create/multiple", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    List<Product> createMultiple(@RequestBody List<Product> products) throws Exception {
+
+        return this.productService.createMultiple(products);
+    }
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public
     @ResponseBody

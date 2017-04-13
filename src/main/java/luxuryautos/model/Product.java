@@ -1,9 +1,7 @@
 package luxuryautos.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "PRODUCT")
@@ -23,6 +21,9 @@ public class Product extends AbstractEntity {
 
     @Lob
     private String description;
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<Review> reviews;
 
     public Make getMake() {
         return make;
@@ -86,5 +87,13 @@ public class Product extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

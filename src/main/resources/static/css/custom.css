@@ -34,12 +34,6 @@ body,
     background-size: cover;
 }
 
-.carousel-item:nth-child(4) {
-    background-image: url("http://images.caricos.com/a/audi/2017_audi_r8_v10_us/images/2560x1440/2017_audi_r8_v10_us_1_2560x1440.jpg ");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 .img-view {
     display: block;
     height: 250px;
@@ -95,14 +89,25 @@ body,
 
 .product-table img {
     max-height: 150px;
-    min-width: 50px; }
+    min-width: 50px;
+}
 
 .product-table td {
-    vertical-align: middle; }
+    vertical-align: middle;
+}
 
 .btn-rounded {
     -webkit-border-radius: 10em;
     -moz-border-radius: 10em;
     -ms-border-radius: 10em;
     -o-border-radius: 10em;
-    border-radius: 10em; }
+    border-radius: 10em;
+}
+
+.rating.disabled .star-container .star, .star.disabled {
+    opacity: 1 !important;
+}
+
+.label-value.disabled, .rating.disabled .label-value {
+    opacity: 1 !important;
+}

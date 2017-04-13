@@ -1,4 +1,4 @@
-angular.module('myApp').controller('home', function($rootScope, $cookies, toastr, productService, makeService, customerService) {
+angular.module('myApp').controller('home', function($rootScope, $cookies, toastr, productService, makeService, customerService, basketItemService) {
 
     let self = this;
     self.makeNamesSelect = [];
@@ -6,10 +6,12 @@ angular.module('myApp').controller('home', function($rootScope, $cookies, toastr
     self.maxPrice = 5000000;
     let user = {};
 
-    let userString = $cookies.get('currentUser');
-    if(userString != null) {
-        $rootScope.currentUser = JSON.parse(userString);
-        user = $rootScope.currentUser;
+    let userId = $cookies.get('currentUser');
+    if(userId != null) {
+        customerService.getById(userId).then(function successCallback(response) {
+            $rootScope.currentUser = response.data;
+            user = $rootScope.currentUser;
+        });
     }
 
     productService.getAll().then(function (response) {
@@ -29,10 +31,12 @@ angular.module('myApp').controller('home', function($rootScope, $cookies, toastr
 
     self.addToBasket = function (product) {
         if (user != null) {
-            user.basket.push(product);
-            customerService.create(user).then(function successCallback(response) {
-                $cookies.put('currentUser', JSON.stringify(response.data));
-                $rootScope.currentUser = response.data;
+            let basketItem = {};
+            basketItem.customer = user;
+            basketItem.product = product;
+            basketItem.quantity = 1;
+
+            basketItemService.save(basketItem).then(function successCallback(response) {
                 toastr.success(product.make.name + ' ' + product.model.name, 'Added to basket');
             }, function errorCallback() {
                 toastr.error('An unknown error occurred', 'Error');

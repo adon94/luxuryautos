@@ -11,10 +11,62 @@
                     </div>
                 </div>
                 <div class="card card-block">
-                    <h4 class="card-title">Description</h4>
+                    <h3 class="card-title">Description</h3>
                     <hr class="my-2">
                     <p ng-if="!ctrl.editable">{{ctrl.product.description}}</p>
                     <textarea ng-if="ctrl.editable" type="text" id="form7" class="form-control" style="height: 200px" ng-model="ctrl.product.description"></textarea>
+                </div>
+                <div class="card card-block">
+                    <h3 class="card-title">Reviews</h3>
+                    <p>
+                        <star-rating-comp
+                                style="float: left"
+                                rating="ctrl.averageRating"
+                                show-half-stars="true"
+                                readOnly="true"
+                                disabled="true"
+                                label-text="'Overall rating'"
+                                label-position="'left'"
+                        ></star-rating-comp>
+                    </p>
+                    <hr class="my-2">
+                    <form ng-submit="ctrl.postReview()">
+                    <h4>Leave a review</h4>
+                        <div class="form-group">
+                            <p>
+                                <star-rating-comp
+                                    style="float: left"
+                                    on-rating-change="ctrl.onRatingChange($event)"
+                                    label-text="'Your rating'"
+                                    label-position="'left'"
+                                    speed="'noticeable'"
+                                    ng-model="ctrl.review.rating">
+                                </star-rating-comp>
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group" style="margin-top: 10px">
+                            <label for="reviewDesc">Review description</label>
+                            <textarea class="md-textarea" ng-model="ctrl.review.description" id="reviewDesc" type="text" ng-model="ctrl.review.description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-elegant">Submit review</button>
+                    </form>
+                    <hr class="my-2">
+                    <h4 ng-if="ctrl.product.reviews.length > 0" style="margin-top: 30px">Submitted reviews</h4>
+                    <h4 ng-if="ctrl.product.reviews.length == 0" style="margin-top: 30px">No submitted reviews</h4>
+                    <div ng-repeat="review in ctrl.product.reviews | orderBy:'-id'">
+                        <p>
+                            <star-rating-comp
+                                    style="float: left"
+                                    rating="review.rating"
+                                    readOnly="true"
+                                    disabled="true"
+                                    label-text="review.customer.name"
+                                    label-position="'left'">
+                            </star-rating-comp>
+                        </p>
+                        <p style="margin-top: 30px">{{review.description}}</p>
+                    </div>
                 </div>
             </div>
             <div class="col-4">
@@ -23,6 +75,15 @@
                     <div class="card-block">
                         <h4 class="card-title">{{ctrl.product.make.name}} {{ctrl.product.model.name}}</h4>
                         <hr class="my-2">
+                        <p style="margin-bottom: 40px">
+                            <star-rating-comp
+                                    style="float: left"
+                                    rating="ctrl.averageRating"
+                                    show-half-stars="true"
+                                    readOnly="true"
+                                    disabled="true"
+                            ></star-rating-comp>
+                        </p>
                         <p ng-if="!ctrl.editable">{{ctrl.product.color}}</p>
                         <input class="form-control" ng-if="ctrl.editable" ng-model="ctrl.product.color">
                         <p ng-if="!ctrl.editable" class="text-muted">{{ctrl.product.price | currency:"€"}}</p>

@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductService {
 
     Product create(Product product) throws Exception;
+    List<Product> createMultiple(List<Product> products) throws Exception;
     List<Product> viewAll() throws Exception;
     Product view(Long id) throws Exception;
 }

@@ -1,7 +1,9 @@
 package luxuryautos.service.impl;
 
 import luxuryautos.dao.CustomerDAO;
+import luxuryautos.dao.ProductDAO;
 import luxuryautos.model.Customer;
+import luxuryautos.model.Product;
 import luxuryautos.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,13 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerDAO = customerDAO;
     }
 
+    private ProductDAO productDAO;
+
+    @Autowired
+    public void setProductDAO(ProductDAO productDAO) {
+        this.productDAO = productDAO;
+    }
+
     @Override
     public Customer view(Long id) throws Exception {
         return customerDAO.findOne(id);
@@ -31,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) throws Exception {
+    public Customer save(Customer customer) throws Exception {        
         return customerDAO.save(customer);
     }
 

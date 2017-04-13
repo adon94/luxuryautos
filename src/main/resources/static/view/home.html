@@ -45,7 +45,10 @@
                                 <p>{{product.color}}</p>
                                 <div class="card-footer">
                                     <span class="left text-muted">{{product.price | currency:"€"}}</span>
-                                    <span class="right"><a ng-click="ctrl.addToBasket(product)">+ <i class="fa fa-shopping-basket"></i></a></span>
+                                    <span class="right">
+                                        <a ng-if="product.stock > 0" ng-click="ctrl.addToBasket(product)">+ <i class="fa fa-shopping-basket"></i></a>
+                                        <p ng-if="product.stock == 0" style="color: red">Out of stock</p>
+                                    </span>
                                 </div>
                             </div>
                         </div>

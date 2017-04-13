@@ -4,9 +4,12 @@ angular.module('myApp').controller('login', function($rootScope, $cookies, $loca
     self.user = {};
     self.new = {};
 
-    let userString = $cookies.get('currentUser');
-    if(userString != null) {
-        $rootScope.currentUser = JSON.parse(userString);
+    let userId = $cookies.get('currentUser');
+    if(userId != null) {
+        customerService.getById(userId).then(function successCallback(response) {
+            $rootScope.currentUser = response.data;
+            self.user = $rootScope.currentUser;
+        });
     }
 
     self.createUser = function () {
@@ -16,7 +19,7 @@ angular.module('myApp').controller('login', function($rootScope, $cookies, $loca
                     self.new.admin = false;
                     customerService.create(self.new).then(function (response) {
                         if (response.status == 200) {
-                            $cookies.put('currentUser', JSON.stringify(response.data));
+                            $cookies.put('currentUser', response.data.id);
                             $rootScope.currentUser = response.data;
                             $location.path("/");
                             toastr.success('Logged in as ' + response.data.name, 'Welcome');
@@ -36,7 +39,7 @@ angular.module('myApp').controller('login', function($rootScope, $cookies, $loca
     self.login = function () {
         if(self.user.password != null && self.user.email != null) {
             customerService.login(self.user).then(function successCallback(response) {
-                $cookies.put('currentUser', JSON.stringify(response.data));
+                $cookies.put('currentUser', response.data.id);
                 $rootScope.currentUser = response.data;
                 $location.path("/");
                 toastr.success('Logged in as ' + response.data.name, 'Welcome back');

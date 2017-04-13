@@ -25,6 +25,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> createMultiple(List<Product> products) throws Exception {
+
+        for (Product p : products){
+            int newStock = p.getStock() - 1;
+            p.setStock(newStock);
+        }
+
+        return productDAO.save(products);
+    }
+
+    @Override
     public List<Product> viewAll() throws Exception {
         return productDAO.findAll();
     }

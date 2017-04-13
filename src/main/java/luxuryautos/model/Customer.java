@@ -19,12 +19,6 @@ public class Customer extends AbstractEntity {
     private String cardExpiry;
     private boolean admin;
 
-    @OneToMany
-    private List<Product> basket;
-
-    @OneToMany
-    private List<Product> purchased;
-
     public String getEmail() {
         return email;
     }
@@ -87,22 +81,6 @@ public class Customer extends AbstractEntity {
 
     public void setCardExpiry(String cardExpiry) {
         this.cardExpiry = cardExpiry;
-    }
-
-    public List<Product> getBasket() {
-        return basket;
-    }
-
-    public void setBasket(List<Product> basket) {
-        this.basket = basket;
-    }
-
-    public List<Product> getPurchased() {
-        return purchased;
-    }
-
-    public void setPurchased(List<Product> purchased) {
-        this.purchased = purchased;
     }
 
     public boolean isAdmin() {

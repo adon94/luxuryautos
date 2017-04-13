@@ -7,6 +7,9 @@ angular.module('myApp').factory('customerService', function($http) {
         create: function (customer) {
             return $http.post('/customer/create', customer);
         },
+        purchase: function (customer) {
+            return $http.post('/customer/purchase', customer);
+        },
         getById: function (id) {
             return $http.get('/customer/view/'+id);
         },

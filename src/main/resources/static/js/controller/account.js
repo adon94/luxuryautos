@@ -6,10 +6,12 @@ angular.module('myApp').controller('account', function($rootScope, $cookies, $lo
     // angular.element(document.querySelector('#purchaseModal')).modal('hide');
     angular.element(document.querySelector('.modal-backdrop')).remove();
 
-    let userString = $cookies.get('currentUser');
-    if (userString != null) {
-        $rootScope.currentUser = JSON.parse(userString);
-        self.user = $rootScope.currentUser;
+    let userId = $cookies.get('currentUser');
+    if(userId != null) {
+        customerService.getById(userId).then(function successCallback(response) {
+            $rootScope.currentUser = response.data;
+            self.user = $rootScope.currentUser;
+        });
     }
 
     self.editName = false;
@@ -23,7 +25,7 @@ angular.module('myApp').controller('account', function($rootScope, $cookies, $lo
 
     self.updateUser = function () {
         customerService.create(self.user).then(function successCallback(response) {
-            $cookies.put('currentUser', JSON.stringify(response.data));
+            $cookies.put('currentUser', response.data.id);
             $rootScope.currentUser = response.data;
             self.user = $rootScope.currentUser;
             toastr.success('User details updated');

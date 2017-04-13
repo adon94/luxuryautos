@@ -1,4 +1,4 @@
-angular.module('myApp', [ 'ngRoute', 'ngCookies', 'toastr' ]).config(function($routeProvider, $locationProvider, toastrConfig) {
+angular.module('myApp', [ 'ngRoute', 'ngCookies', 'toastr', 'star-rating' ]).config(function($routeProvider, $locationProvider, toastrConfig) {
 
     $locationProvider.hashPrefix('');
 

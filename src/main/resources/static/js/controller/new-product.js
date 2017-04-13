@@ -1,4 +1,4 @@
-angular.module('myApp').controller('newProduct', function($scope, $rootScope, $cookies, $location, productService, makeService, modelService) {
+angular.module('myApp').controller('newProduct', function($scope, $rootScope, $cookies, $location, customerService, productService, makeService, modelService) {
 
     let self = this;
     self.product = {};
@@ -6,9 +6,11 @@ angular.module('myApp').controller('newProduct', function($scope, $rootScope, $c
     self.newModel = {};
     self.makeForModel = {};
 
-    let userString = $cookies.get('currentUser');
-    if(userString != null) {
-        $rootScope.currentUser = JSON.parse(userString);
+    let userId = $cookies.get('currentUser');
+    if(userId != null) {
+        customerService.getById(userId).then(function successCallback(response) {
+            $rootScope.currentUser = response.data;
+        });
     }
 
     self.refresh = function () {
