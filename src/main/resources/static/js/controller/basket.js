@@ -57,32 +57,77 @@ angular.module('myApp').controller('basket', function($rootScope, $cookies, $loc
 
     self.confirmPurchase = function () {
 
-        if(user.cardCvc != null && user.cardType != null && user.cardExpiry != null && user.cardNumber != null && user.address != null && user.name != null) {
-            if (self.cvc == user.cardCvc) {
+        let purchase = new Purchase(user);
+        let result = purchase.attempt();
 
-                basketItemService.purchase(self.basketItems).then(function successCallback(response) {
+        if(result == "success") {
 
-                    angular.element(document.querySelector('#purchaseModal')).modal('hide');
-                    angular.element(document.querySelector('.modal-backdrop')).remove();
+            basketItemService.purchase(self.basketItems).then(function successCallback(response) {
 
-                    toastr.success('Order confirmed', 'Thank you for your purchase');
-                    $location.path("/");
-                }, function errorCallback(response) {
-                    if (response.status == 409){
-                        angular.forEach(response.data, function (value) {
-                            toastr.warning('Order quantity too high for ' + value.product.make.name + ' ' + value.product.model.name, 'Please review your order');
-                        });
-                    } else {
-                        toastr.error('An unknown error occured', 'Error');
-                    }
-                });
-            } else {
-                toastr.error('Incorrect CVC', 'Error');
-            }
-        } else {
-            toastr.info('<a href="#/account">Click here</a>', 'You must complete your account details to proceed', {
-                allowHtml: true
+                angular.element(document.querySelector('#purchaseModal')).modal('hide');
+                angular.element(document.querySelector('.modal-backdrop')).remove();
+
+                toastr.success('Order confirmed', 'Thank you for your purchase');
+                $location.path("/");
+            }, function errorCallback(response) {
+                if (response.status == 409){
+                    angular.forEach(response.data, function (value) {
+                        toastr.warning('Order quantity too high for ' + value.product.make.name + ' ' + value.product.model.name, 'Please review your order');
+                    });
+                } else {
+                    toastr.error('An unknown error occured', 'Error');
+                }
             });
+
+        } else {
+            result;
+        }
+    };
+
+    let Purchase = function (user) {
+        this.user = user;
+    };
+
+    Purchase.prototype = {
+        attempt: function () {
+            let result = "success";
+            if (!new CardDetails().verify(this.user)) {
+                return toastr.info('<a href="#/account">Click here</a>',
+                    'You must complete your card details to proceed', {
+                    allowHtml: true
+                });
+            } else if (!new AddressCheck().verify(this.user)) {
+                return toastr.info('<a href="#/account">Click here</a>',
+                    'You must enter your shipping address to proceed', {
+                        allowHtml: true
+                    });
+            } else if (!new CvcMatch().verify(this.user)) {
+                return toastr.error('Incorrect CVC', 'Error');
+            }
+            return result;
+        }
+    };
+
+    let CardDetails = function () {
+        this.verify = function (user) {
+            if (user.cardCvc != null || user.cardCvc != "" || user.cardType != null || user.cardType != ""
+                || user.cardExpiry != null || user.cardExpiry != "" || user.cardNumber != null || user.cardNumber != "") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+
+    let CvcMatch = function () {
+        this.verify = function (user) {
+            return user.cardCvc == self.cvc;
+        }
+    };
+
+    let AddressCheck = function () {
+        this.verify = function (user) {
+            return user.address != null || user.address != "";
         }
     };
 
