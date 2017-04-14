@@ -54,4 +54,37 @@ angular.module('myApp').controller('login', function($rootScope, $cookies, $loca
             })
         }
     };
+
+
+    // self.getUser = function () {
+    //
+    //     let userInstance;
+    //
+    //     function create() {
+    //
+    //
+    //         function login() {
+    //             self.login();
+    //         }
+    //
+    //         function register() {
+    //             self.createUser();
+    //         }
+    //     }
+    //
+    //     return {
+    //         getInstance: function () {
+    //             if (!userInstance) {
+    //                 userInstance = login();
+    //             }
+    //             return userInstance;
+    //         }
+    //     };
+    //
+    //     function Singleton() {
+    //         if (!userInstance) {
+    //             userInstance = initialize();
+    //         }
+    //     }
+    // }
 });

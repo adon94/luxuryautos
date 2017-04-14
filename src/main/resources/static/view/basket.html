@@ -82,6 +82,16 @@
                     <form ng-submit="ctrl.confirmPurchase()">
                         <div class="modal-body">
                             <div class="form-group">
+                                <label for="shipping">Select a shipping preference</label>
+                                <select class="input-md" id="shipping" ng-model="ctrl.shippingMethod"
+                                        ng-change="ctrl.getShippingCosts()">
+                                    <option ng-value="ctrl.NextDay">Next day delivery</option>
+                                    <option ng-value="ctrl.OneWeek">One week</option>
+                                    <option ng-value="ctrl.TwoWeeks">Two weeks</option>
+                                </select>
+                                <p>Total cost incl. shipping: {{ctrl.shippingCosts | currency:"€"}}</p>
+                            </div>
+                            <div class="form-group">
                                 <label for="cvcInput">Enter CVC to confirm purchase</label>
                                 <input class="input-md" id="cvcInput" type="text" ng-model="ctrl.cvc">
                             </div>

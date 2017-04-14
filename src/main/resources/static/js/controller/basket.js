@@ -35,6 +35,8 @@ angular.module('myApp').controller('basket', function($rootScope, $cookies, $loc
                 self.totalPrice += value.product.price * value.quantity;
             }
         });
+
+        self.getShippingCosts();
     };
 
     self.removeProduct = function (basket) {
@@ -119,6 +121,52 @@ angular.module('myApp').controller('basket', function($rootScope, $cookies, $loc
 
             }
         }
+    };
+
+    let Shipping = function () {
+        this.shippingMethod = "";
+    };
+
+    Shipping.prototype = {
+        setStrategy: function (shippingMethod) {
+            this.shippingMethod = shippingMethod;
+        },
+        calculate: function (initialCost) {
+            return self.shippingMethod.calculate(initialCost);
+        }
+    };
+
+    self.NextDay = {
+        calculate : function (initialCost) {
+            return initialCost + (initialCost * 0.2);
+        }
+    };
+
+    self.OneWeek = {
+        calculate : function (initialCost) {
+            return initialCost + (initialCost * 0.1);
+        }
+    };
+
+    self.TwoWeeks = {
+        calculate : function (initialCost) {
+            return initialCost;
+        }
+    };
+
+    self.shippingCosts = 0;
+    self.shippingMethod = self.NextDay;
+
+    self.getShippingCosts = function () {
+        console.log("Getting shipping costs");
+        let shipping = new Shipping();
+
+        // let OneWeek = OneWeek();
+        // let TwoWeeks = TwoWeeks();
+
+        shipping.setStrategy(self.shippingMethod);
+
+        self.shippingCosts = shipping.calculate(self.totalPrice);
     };
 
 });
