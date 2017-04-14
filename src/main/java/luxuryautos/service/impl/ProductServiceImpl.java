@@ -18,7 +18,6 @@ public class ProductServiceImpl implements ProductService {
         this.productDAO = productDAO;
     }
 
-
     @Override
     public Product create(Product product) throws Exception {
         return productDAO.save(product);
